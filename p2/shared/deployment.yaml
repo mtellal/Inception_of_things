@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-one
+  labels:
+    app: app-one	
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-one
+  template:
+    metadata:
+      labels:
+        app: app-one
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        env:
+          - name: APP_ID
+            value: app-one
+        volumeMounts:
+        - name: indexhtml
+          mountPath: /home/index.html
+        ports:
+        - containerPort: 80
+        command: ["/bin/sh"]
+        args: ["-c", "echo 'EDITING INDEX2.HTML' && sed \"s|POD_ID|$HOSTNAME|g\" /home/index.html \
+| (node_id=$(uname -a | awk '{for (i=6; i<=NF; i++) printf \"%s \", $i}' | tr -d '/n') && sed \"s|NODE_ID|$node_id|g\")
+| sed \"s|APP_ID|$APP_ID|g\"  > /usr/share/nginx/html/index.html \
+&& nginx -g 'daemon off;'"]      
+      volumes:
+      - name: indexhtml
+        hostPath:
+          path: /home/vagrant/shared/index.html
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-two
+  labels:
+    app: app-two
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-two
+  template:
+    metadata:
+      labels:
+        app: app-two
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        env:
+          - name: APP_ID
+            value: app-two
+        volumeMounts:
+        - name: indexhtml
+          mountPath: /home/index.html
+        ports:
+        - containerPort: 80
+        command: ["/bin/sh"]
+        args: ["-c", "echo 'EDITING INDEX2.HTML' && sed \"s|POD_ID|$HOSTNAME|g\" /home/index.html \
+| (node_id=$(uname -a | awk '{for (i=6; i<=NF; i++) printf \"%s \", $i}' | tr -d '/n') && sed \"s|NODE_ID|$node_id|g\")
+| sed \"s|APP_ID|$APP_ID|g\"  > /usr/share/nginx/html/index.html \
+&& nginx -g 'daemon off;'"]
+      volumes:
+      - name: indexhtml
+        hostPath:
+          path: /home/vagrant/shared/index.html
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-three
+  labels:
+    app: app-three
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-three
+  template:
+    metadata:
+      labels:
+        app: app-three
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        env:
+          - name: APP_ID
+            value: app-three
+        volumeMounts:
+        - name: indexhtml
+          mountPath: /home/index.html
+        ports:
+        - containerPort: 80
+        command: ["/bin/sh"]
+        args: ["-c", "echo 'EDITING INDEX2.HTML' && sed \"s|POD_ID|$HOSTNAME|g\" /home/index.html \
+| (node_id=$(uname -a | awk '{for (i=6; i<=NF; i++) printf \"%s \", $i}' | tr -d '/n') && sed \"s|NODE_ID|$node_id|g\")
+| sed \"s|APP_ID|$APP_ID|g\"  > /usr/share/nginx/html/index.html \
+&& nginx -g 'daemon off;'"]
+      volumes:
+      - name: indexhtml
+        hostPath:
+          path: /home/vagrant/shared/index.html
+
