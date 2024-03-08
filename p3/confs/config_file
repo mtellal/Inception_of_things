@@ -10,3 +10,6 @@ GUEST_ADDITIONS_ISO="/usr/share/virtualbox/VBoxGuestAdditions.iso"
 
 ### Post Install
 POST_INSTALL_TEMPLATE="./install.sh"
+
+### Public repo
+REPO="git@github.com:mtellal/argocd-config.git"
