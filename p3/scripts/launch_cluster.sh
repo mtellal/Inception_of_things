@@ -33,7 +33,7 @@ argocd account update-password --current-password $ARGO_PWD --new-password admin
 
 while true; do
   argocd app create playground \
-    --repo https://github.com/mtellal/argocd-config.git \
+    --repo https://github.com/mtellal/argocd-config-mtellal.git \
     --path dev/ \
     --dest-namespace dev \
     --dest-server https://kubernetes.default.svc \
