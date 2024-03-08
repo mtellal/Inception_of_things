@@ -1,16 +1,12 @@
 ### Credentials
 VM_NAME="ubuntu"
-VM_USER="mtellal"
-VM_USER_PASSWORD="mtellal"
-
+VM_USER="$USER"
+VM_USER_PASSWORD="$USER"
+echo $VM_USER_PASSWORD
 ### VM Configuration
-DISK_PATH="$HOME/VirtualBox VMs/$VM_NAME/MyDisk.vdi"
-ISO="$HOME/Downloads/ubuntu-18.04.6-desktop-amd64.iso"
-GUEST_ADDITIONS_ISO="/home/abarbier/.config/VirtualBox/VBoxGuestAdditions_6.1.50.iso"
-
-### Shared Folder
-HOST_FOLDER="$HOME/Documents/Inception_of_things/p3"
-VM_FOLDER="p3"
+DISK_PATH="/mnt/nfs/homes/$USER/sgoinfre/test/ubuntu_ecole/ubuntu_ecole.vdi"
+ISO="/mnt/nfs/homes/$USER/sgoinfre/ubuntu-18.04.6-desktop-amd64.iso"
+GUEST_ADDITIONS_ISO="/usr/share/virtualbox/VBoxGuestAdditions.iso"
 
 ### Post Install
-POST_INSTALL_TEMPLATE="/home/abarbier/Documents/Inception_of_things/p3/scripts/install.sh"
+POST_INSTALL_TEMPLATE="./install.sh"

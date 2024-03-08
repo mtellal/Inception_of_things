@@ -8,7 +8,7 @@ echo "Starting post-install script..."
 cp /etc/resolv.conf /target/etc/resolv.conf
 
 chroot /target /bin/bash <<'EOF'
-VM_USER="mtellal"
+VM_USER="my_user_to_replace"
 GREEN='\033[0;32m'
 NO_COLOR='\033[0m'
 

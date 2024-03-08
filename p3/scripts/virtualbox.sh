@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Load environment variables from .env file
-source .env
+source ../confs/config_file
 PUB_KEY=$(cat ~/.ssh/id_rsa.pub)
-sed -i "s|'your_public_key'|'$PUB_KEY'|g" ./scripts/install.sh
+sed -i "s|'your_public_key'|'$PUB_KEY'|g" ./install.sh
+sed -i "s|"my_user_to_replace"|"$USER"|g" ./install.sh
 
 echo "Downloading ubuntu 18.04 iso ..."
 
@@ -22,10 +23,6 @@ VBoxManage storageattach $VM_NAME --storagectl "SATA Controller" --port 0 --devi
 VBoxManage storagectl $VM_NAME --name "IDE Controller" --add ide
 VBoxManage storageattach $VM_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium "$ISO"
 
-echo "Mounting shared folder ..."
-
-VBoxManage sharedfolder add "$VM_NAME" --name "$VM_FOLDER" --hostpath "$HOST_FOLDER" --automount
-
 echo "Launching unattended install ..."
 
 VBoxManage unattended install "$VM_NAME" \
@@ -42,12 +39,13 @@ VBoxManage unattended install "$VM_NAME" \
 
 VBoxManage startvm $VM_NAME --type headless
 
-sed -i "s|'$PUB_KEY'|'your_public_key'|g" ./scripts/install.sh
+sed -i "s|'$PUB_KEY'|'your_public_key'|g" ./install.sh
+sed -i "s|"$USER"|"my_user_to_replace"|g" ./install.sh
 ssh-keygen -f "$HOME/.ssh/known_hosts" -R "[localhost]:2222"
 
 echo "SSH connection awaiting ..."
 while true; do
-    ssh -o StrictHostKeyChecking=no -p 2222 mtellal@localhost ls > /dev/null 2>&1
+    ssh -o StrictHostKeyChecking=no -p 2222 $USER@localhost ls
     if [ $? -eq 0 ]; then
         echo "SSH connection successful"
         break
@@ -56,10 +54,10 @@ while true; do
     fi
 done
 
-scp -P 2222 ./scripts/launch_cluster.sh mtellal@localhost:/home/mtellal/launch_cluster.sh
+scp -P 2222 ./launch_cluster.sh $USER@localhost:/home/$USER/launch_cluster.sh
 
-ssh -p 2222 mtellal@localhost bash /home/mtellal/launch_cluster.sh > /dev/null 2>&1
+ssh -p 2222 $USER@localhost bash /home/$USER/launch_cluster.sh
 
-ssh -f -N -L 8080:localhost:8080 -p 2222 mtellal@localhost
+ssh -f -N -L 8080:localhost:8080 -p 2222 $USER@localhost
 
-ssh -f -N -L 8888:localhost:8888 -p 2222 mtellal@localhost
+ssh -f -N -L 8888:localhost:8888 -p 2222 $USER@localhost
