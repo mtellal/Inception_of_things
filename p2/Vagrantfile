@@ -1,26 +1,29 @@
 Vagrant.configure("2") do |config|
-    config.vm.box = "hashicorp/bionic64"
-    
-    config.vm.define "antbarbiS" do |s|
-        s.vm.hostname= "antbarbiS"
-        s.vm.network "private_network", ip: "192.168.56.110"
-        s.vm.synced_folder "shared", "/shared"
-        s.vm.provider "virtualbox" do |vb|
-            vb.memory = "1024"
-            vb.cpus = "2"
-        end
-        s.vm.provision "shell", path: "./scripts/s_script.sh"
+  
+	config.vm.box = "generic/debian10"
 
-    end
+	config.vm.define "mtellalS" do |guest|
+		
+		# SET MACHINE HOSTNAME
+		guest.vm.hostname = "mtellalS"
+		
+		# SET MACHINE IP ADDR
+		guest.vm.network "private_network", ip: "192.168.56.110"
 
-    config.vm.define "antbarbiSW" do |sw|
-        sw.vm.hostname= "antbarbiSW"
-        sw.vm.network "private_network", ip: "192.168.56.111"
-        sw.vm.synced_folder "shared", "/shared"
-        sw.vm.provider "virtualbox" do |vb|
-            vb.memory = "1024"
-            vb.cpus = "2"
-        end
-        sw.vm.provision "shell", path: "./scripts/sw_script.sh"
-    end
+		# SET SHARED FOLDER	
+		guest.vm.synced_folder "./shared", "/home/vagrant/shared"
+	
+		# FORWARD PORTS
+		config.vm.network "forwarded_port", guest: 8080, host: 8080
+
+		# PROVISION 
+		guest.vm.provision "shell", path: "shared/server.sh"
+
+		# DEFINE VM RESSOURCES
+		guest.vm.provider "virtualbox" do |vm|
+			vm.memory = 2048
+			vm.cpus = 2
+		end
+	end
+
 end
