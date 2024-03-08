@@ -8,7 +8,7 @@ sed -i "s|"my_user_to_replace"|"$USER"|g" ./install.sh
 
 echo "Downloading ubuntu 18.04 iso ..."
 
-#curl -o /mnt/nfs/homes/$USER/goinfre/ubuntu-18.04.6-desktop-amd64.iso https://releases.ubuntu.com/18.04/ubuntu-18.04.6-desktop-amd64.iso
+curl -o /mnt/nfs/homes/$USER/sgoinfre/ubuntu-18.04.6-desktop-amd64.iso https://releases.ubuntu.com/18.04/ubuntu-18.04.6-desktop-amd64.iso
 
 echo "Creating virtual machine (mem: 2048, size: 20G) ..."
 
