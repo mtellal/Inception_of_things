@@ -11,5 +11,6 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-ip=$SERVER_IP --flannel-
 echo "COPYINNG NODE TOKEN"
 cp /var/lib/rancher/k3s/server/node-token $SHARED_FOLDER
 
-echo "ALIAS K added"
-echo "alias k='kubectl'" >> /home/vagrant/.bashrc
+echo "ADDING K ALIAS ...."
+sudo -u vagrant bash -c 'echo "alias k='\''kubectl'\''" >> /home/vagrant/.bashrc'
+source /home/vagrant/.bashrc
