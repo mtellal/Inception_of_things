@@ -1,7 +1,7 @@
 #!/bin/bash
 
 INTERFACE=eth1
-SERVER_IP=192.168.56.111
+SERVER_IP=192.168.56.110
 
 SHARED_FOLDER=/home/vagrant/shared
 
