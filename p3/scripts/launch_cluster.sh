@@ -31,16 +31,14 @@ argocd login localhost:8080 --username admin --password $ARGO_PWD --insecure
 
 argocd account update-password --current-password $ARGO_PWD --new-password admin123
 
-
-### Some issues might happen where create playground fails
-
-argocd app create playground \
-  --repo https://github.com/mtellal/argocd-config.git \
-  --path dev/ \
-  --dest-namespace dev \
-  --dest-server https://kubernetes.default.svc \
-  --sync-policy automated \
-  --revision antbarbi \
-  --sync-policy automated
+while true; do
+  argocd app create playground \
+    --repo https://github.com/mtellal/argocd-config.git \
+    --path dev/ \
+    --dest-namespace dev \
+    --dest-server https://kubernetes.default.svc \
+    --sync-policy automated \
+    --revision antbarbi && break
+done
 
 nohup bash -c 'while true; do kubectl port-forward svc/wil-app -n dev 8888:8888; sleep 5; done' > /dev/null 2>&1 &

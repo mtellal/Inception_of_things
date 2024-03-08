@@ -1,0 +1,16 @@
+### Credentials
+VM_NAME="ubuntu"
+VM_USER="mtellal"
+VM_USER_PASSWORD="mtellal"
+
+### VM Configuration
+DISK_PATH="$HOME/VirtualBox VMs/$VM_NAME/MyDisk.vdi"
+ISO="$HOME/Downloads/ubuntu-18.04.6-desktop-amd64.iso"
+GUEST_ADDITIONS_ISO="/home/abarbier/.config/VirtualBox/VBoxGuestAdditions_6.1.50.iso"
+
+### Shared Folder
+HOST_FOLDER="$HOME/Documents/Inception_of_things/p3"
+VM_FOLDER="p3"
+
+### Post Install
+POST_INSTALL_TEMPLATE="/home/abarbier/Documents/Inception_of_things/p3/scripts/install.sh"
