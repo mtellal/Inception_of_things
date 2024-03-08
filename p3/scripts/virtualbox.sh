@@ -45,7 +45,7 @@ ssh-keygen -f "$HOME/.ssh/known_hosts" -R "[localhost]:2222"
 
 echo "SSH connection awaiting ..."
 while true; do
-    ssh -o StrictHostKeyChecking=no -p 2222 $USER@localhost ls
+    ssh -o StrictHostKeyChecking=no -p 2222 $USER@localhost ls > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         echo "SSH connection successful"
         break
